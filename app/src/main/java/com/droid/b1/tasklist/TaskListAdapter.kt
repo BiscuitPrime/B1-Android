@@ -8,13 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.droid.b1.R
 
 class TaskListAdapter : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
-    var currentList: List<String> = emptyList()
+    var currentList: List<Task> = emptyList()
 
     // on utilise `inner` ici afin d'avoir accès aux propriétés de l'adapter directement
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textView = itemView.findViewById<TextView>(R.id.task_title);
-        fun bind(taskTitle: String) {
-            textView.text = taskTitle;
+        val textViewTitle = itemView.findViewById<TextView>(R.id.task_title);
+        val textViewDescription = itemView.findViewById<TextView>(R.id.task_description);
+        fun bind(task: Task) {
+            textViewTitle.text = task.title;
+            textViewDescription.text=task.description;
         }
     }
 
