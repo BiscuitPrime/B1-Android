@@ -43,12 +43,15 @@ class TaskListFragment : Fragment() {
         //val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView);
         val recyclerView = binding?.recyclerView;
         recyclerView?.adapter=adapter;
-        adapter.submitList(taskList);
+        //adapter.submitList(taskList);
         binding?.floatingActionButton?.setOnClickListener(){
             val new_task = Task(UUID.randomUUID().toString(),"Task ${taskList.size+1}")
             taskList = taskList + new_task;
             refreshAdapter();
+            viewModel.update(new_task)
+            viewModel.add(new_task);
         }
+
 
         lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
             suspendMethod();
@@ -60,7 +63,7 @@ class TaskListFragment : Fragment() {
         viewModel.tasksStateFlow.collect { newList ->
             // cette lambda est executée à chaque fois que la liste est mise à jour dans le VM
             // -> ici, on met à jour la liste dans l'adapter
-            taskList = taskList + newList;
+            taskList = newList;
             refreshAdapter();
         }
     }

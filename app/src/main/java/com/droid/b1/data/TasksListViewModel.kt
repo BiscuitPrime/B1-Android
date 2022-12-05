@@ -38,7 +38,18 @@ class TasksListViewModel : ViewModel() {
     }
 
     // à compléter plus tard:
-    fun add(task: Task) {}
+    fun add(task: Task) {
+        viewModelScope.launch {
+            val response = webService.create(task);
+            if (!response.isSuccessful) {
+                Log.e("Network", "Error: ${response.raw()}")
+                return@launch
+            }
+
+            val updatedTask = response.body()!!
+            tasksStateFlow.value = tasksStateFlow.value + updatedTask;
+        }
+    }
     fun edit(task: Task) {}
     fun remove(task: Task) {}
 }
