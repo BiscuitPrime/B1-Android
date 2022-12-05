@@ -26,7 +26,7 @@ class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDif
         val textViewTitle = itemView.findViewById<TextView>(R.id.task_title);
         val textViewDescription = itemView.findViewById<TextView>(R.id.task_description);
         fun bind(task: Task) {
-            textViewTitle.text = task.title;
+            textViewTitle.text = task.content;
             textViewDescription.text=task.description;
         }
     }
