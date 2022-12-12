@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,14 +40,15 @@ class DetailActivity : ComponentActivity() {
 
 @Composable
 fun Detail(onValidate: (Task) -> Unit) {
+    var task by remember { mutableStateOf(Task("pif", "paf", "pouf")) }
+
     Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
         Text(text = "Task Detail", style = MaterialTheme.typography.h1)
-        OutlinedTextField(text = "title")
-        OutlinedTextField(text = "description")
+        OutlinedTextField(task.content, {task.content = it})
+        OutlinedTextField(task.description, {task.description = it})
         Button(onClick = {
-            val newTask = Task(id = UUID.randomUUID().toString(), "New Task !","Pouet");
-            var task by remember { mutableStateOf(Task()) } // faire les imports suggérés par l'IDE
-            onValidate(newTask);
+            //val newTask = Task(id = UUID.randomUUID().toString(), "New Task !","Pouet");
+            onValidate(task);
         }) {}
     }
 }
