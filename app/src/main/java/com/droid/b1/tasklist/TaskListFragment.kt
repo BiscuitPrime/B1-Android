@@ -1,5 +1,6 @@
 package com.droid.b1.tasklist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import coil.load
 import com.droid.b1.data.Api
 import com.droid.b1.data.TasksListViewModel
 import com.droid.b1.databinding.FragmentTaskListBinding
+import com.droid.b1.user.UserActivity
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -52,6 +55,10 @@ class TaskListFragment : Fragment() {
             viewModel.add(new_task);
         }
 
+        binding?.imageView?.setOnClickListener(){
+            val intent = Intent(this.context,UserActivity::class.java);
+            startActivity(intent);
+        }
 
         lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
             suspendMethod();
@@ -74,6 +81,7 @@ class TaskListFragment : Fragment() {
         lifecycleScope.launch {
             mySuspendMethod()
         }
+        binding?.imageView?.load("https://goo.gl/gEgYUd");
         viewModel.refresh() // on demande de rafraîchir les données sans attendre le retour directement
     }
 
