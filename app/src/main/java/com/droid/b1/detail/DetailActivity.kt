@@ -47,7 +47,6 @@ fun Detail(onValidate: (Task) -> Unit) {
         OutlinedTextField(text, {text = it})
         OutlinedTextField(description, {description = it})
         Button(onClick = {
-            //val newTask = Task(id = UUID.randomUUID().toString(), "New Task !","Pouet");
             task.content = text;
             task.description = description;
             onValidate(task);
