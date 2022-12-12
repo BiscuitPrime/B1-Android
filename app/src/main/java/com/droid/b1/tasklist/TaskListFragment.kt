@@ -32,6 +32,10 @@ class TaskListFragment : Fragment() {
     {
        result ->
         // dans cette callback on récupèrera la task et on l'ajoutera à la liste
+        val task = result.data?.getSerializableExtra("task") as Task
+        taskList = taskList + task;
+        refreshAdapter();
+        viewModel.update(task)
     }
 
 

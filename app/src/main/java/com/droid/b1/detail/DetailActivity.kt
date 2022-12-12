@@ -7,16 +7,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.droid.b1.detail.ui.theme.B1AndroidTheme
 import com.droid.b1.tasklist.Task
+import org.w3c.dom.Text
 import java.util.*
 
 class DetailActivity : ComponentActivity() {
@@ -44,10 +44,11 @@ class DetailActivity : ComponentActivity() {
 fun Detail(onValidate: (Task) -> Unit) {
     Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
         Text(text = "Task Detail", style = MaterialTheme.typography.h1)
-        Text(text = "title")
-        Text(text = "description")
+        OutlinedTextField(text = "title")
+        OutlinedTextField(text = "description")
         Button(onClick = {
             val newTask = Task(id = UUID.randomUUID().toString(), "New Task !","Pouet");
+            var task by remember { mutableStateOf(Task()) } // faire les imports suggérés par l'IDE
             onValidate(newTask);
         }) {}
     }
@@ -57,6 +58,6 @@ fun Detail(onValidate: (Task) -> Unit) {
 @Composable
 fun DetailPreview() {
     B1AndroidTheme {
-        Detail()
+        //Detail()
     }
 }

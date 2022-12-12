@@ -11,4 +11,4 @@ data class Task(
     val content : String,
     @SerialName("description")
     val description : String = "Les frigos sont moins chers chez Buts",
-)
+) : java.io.Serializable
