@@ -29,7 +29,11 @@ class DetailActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Detail()
+                    Detail({task ->
+                        intent.putExtra("task",task);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    })
                 }
             }
         }
