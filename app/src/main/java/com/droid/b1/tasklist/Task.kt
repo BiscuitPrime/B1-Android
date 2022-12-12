@@ -10,5 +10,5 @@ data class Task(
     @SerialName("content")
     val content : String,
     @SerialName("description")
-    val description : String = "Les frigos sont moins chers chez Buts"
+    val description : String = "Les frigos sont moins chers chez Buts",
 )

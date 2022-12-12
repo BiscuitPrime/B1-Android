@@ -3,10 +3,12 @@ package com.droid.b1.tasklist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.droid.b1.R
 
 object TaskDiffCallback : DiffUtil.ItemCallback<Task>(){
@@ -25,9 +27,11 @@ class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDif
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewTitle = itemView.findViewById<TextView>(R.id.task_title);
         val textViewDescription = itemView.findViewById<TextView>(R.id.task_description);
+        val textViewImage = itemView.findViewById<ImageView>(R.id.imageTask);
         fun bind(task: Task) {
             textViewTitle.text = task.content;
             textViewDescription.text=task.description;
+            textViewImage.load("https://placebear.com/200/300");
         }
     }
 

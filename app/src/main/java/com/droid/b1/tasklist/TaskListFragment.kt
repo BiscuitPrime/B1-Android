@@ -45,7 +45,7 @@ class TaskListFragment : Fragment() {
         recyclerView?.adapter=adapter;
         //adapter.submitList(taskList);
         binding?.floatingActionButton?.setOnClickListener(){
-            val new_task = Task(UUID.randomUUID().toString(),"Task ${taskList.size+1}")
+            val new_task = Task(UUID.randomUUID().toString(),"Task ${taskList.size+1}","dqz",)
             taskList = taskList + new_task;
             refreshAdapter();
             viewModel.update(new_task)
