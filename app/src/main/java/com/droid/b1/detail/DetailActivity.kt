@@ -14,8 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.droid.b1.detail.ui.theme.B1AndroidTheme
 import com.droid.b1.tasklist.Task
-import org.w3c.dom.Text
-import java.util.*
 
 class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,13 +39,17 @@ class DetailActivity : ComponentActivity() {
 @Composable
 fun Detail(onValidate: (Task) -> Unit) {
     var task by remember { mutableStateOf(Task("pif", "paf", "pouf")) }
+    var text by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
         Text(text = "Task Detail", style = MaterialTheme.typography.h1)
-        OutlinedTextField(task.content, {task.content = it})
-        OutlinedTextField(task.description, {task.description = it})
+        OutlinedTextField(text, {text = it})
+        OutlinedTextField(description, {description = it})
         Button(onClick = {
             //val newTask = Task(id = UUID.randomUUID().toString(), "New Task !","Pouet");
+            task.content = text;
+            task.description = description;
             onValidate(task);
         }) {}
     }
