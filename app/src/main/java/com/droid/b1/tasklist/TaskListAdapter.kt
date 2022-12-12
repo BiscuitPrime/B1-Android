@@ -36,14 +36,16 @@ class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDif
             textViewTitle.text = task.content;
             textViewDescription.text=task.description;
             textViewImage.load("https://placebear.com/200/300");
+            val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteTaskButton);
+            deleteButton.setOnClickListener(){
+                onClickDelete(task);
+            }
         }
-        val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteTaskButton);
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_task,parent,false);
         val taskViewHolder = TaskViewHolder(itemView);
-        taskViewHolder.deleteButton.setOnClickListener(View.OnClickListener { onClickDelete(task) })
         return taskViewHolder;
     }
 

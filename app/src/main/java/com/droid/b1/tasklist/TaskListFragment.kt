@@ -1,5 +1,6 @@
 package com.droid.b1.tasklist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.droid.b1.data.Api
 import com.droid.b1.data.TasksListViewModel
 import com.droid.b1.databinding.FragmentTaskListBinding
+import com.droid.b1.detail.DetailActivity
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -45,11 +47,20 @@ class TaskListFragment : Fragment() {
         recyclerView?.adapter=adapter;
         //adapter.submitList(taskList);
         binding?.floatingActionButton?.setOnClickListener(){
+            val intent = Intent(context, DetailActivity::class.java);
+            startActivity(intent);
             val new_task = Task(UUID.randomUUID().toString(),"Task ${taskList.size+1}","dqz",)
             taskList = taskList + new_task;
             refreshAdapter();
             viewModel.update(new_task)
             viewModel.add(new_task);
+        }
+
+        //deletes the associated task LOCALLY ONLY
+        adapter.onClickDelete = {
+            task -> taskList = taskList - task;
+            refreshAdapter();
+            viewModel.refresh();
         }
 
 
