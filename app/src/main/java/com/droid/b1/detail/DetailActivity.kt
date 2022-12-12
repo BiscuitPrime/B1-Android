@@ -40,7 +40,7 @@ fun Detail() {
         Text(text = "Task Detail", style = MaterialTheme.typography.h1)
         Text(text = "title")
         Text(text = "description")
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { createTask.launch(intent)}) {
             
         }
     }

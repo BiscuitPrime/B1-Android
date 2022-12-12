@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +27,12 @@ class TaskListFragment : Fragment() {
     private val adapter = TaskListAdapter();
     private var binding : FragmentTaskListBinding? = null;
     private val viewModel: TasksListViewModel by viewModels()
+
+    val createTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+    {
+       result ->
+        // dans cette callback on récupèrera la task et on l'ajoutera à la liste
+    }
 
 
     override fun onCreateView(
