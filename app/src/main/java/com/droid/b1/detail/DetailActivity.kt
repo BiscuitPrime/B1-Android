@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.droid.b1.detail.ui.theme.B1AndroidTheme
+import com.droid.b1.tasklist.Task
+import java.util.*
 
 class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,14 +37,15 @@ class DetailActivity : ComponentActivity() {
 }
 
 @Composable
-fun Detail() {
+fun Detail(onValidate: (Task) -> Unit) {
     Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
         Text(text = "Task Detail", style = MaterialTheme.typography.h1)
         Text(text = "title")
         Text(text = "description")
-        Button(onClick = { createTask.launch(intent)}) {
-            
-        }
+        Button(onClick = {
+            val newTask = Task(id = UUID.randomUUID().toString(), "New Task !","Pouet");
+            onValidate(newTask);
+        }) {}
     }
 }
 

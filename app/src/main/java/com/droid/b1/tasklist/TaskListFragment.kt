@@ -55,7 +55,7 @@ class TaskListFragment : Fragment() {
         //adapter.submitList(taskList);
         binding?.floatingActionButton?.setOnClickListener(){
             val intent = Intent(context, DetailActivity::class.java);
-            startActivity(intent);
+            createTask.launch(intent);
             val new_task = Task(UUID.randomUUID().toString(),"Task ${taskList.size+1}","dqz",)
             taskList = taskList + new_task;
             refreshAdapter();
