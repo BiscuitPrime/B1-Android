@@ -3,6 +3,7 @@ package com.droid.b1.tasklist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -23,6 +24,9 @@ object TaskDiffCallback : DiffUtil.ItemCallback<Task>(){
 
 class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDiffCallback) {
 
+    // Déclaration de la variable lambda dans l'adapter:
+    var onClickDelete: (Task) -> Unit = {}
+
     // on utilise `inner` ici afin d'avoir accès aux propriétés de l'adapter directement
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewTitle = itemView.findViewById<TextView>(R.id.task_title);
@@ -33,11 +37,13 @@ class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDif
             textViewDescription.text=task.description;
             textViewImage.load("https://placebear.com/200/300");
         }
+        val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteTaskButton);
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_task,parent,false);
         val taskViewHolder = TaskViewHolder(itemView);
+        taskViewHolder.deleteButton.setOnClickListener(View.OnClickListener { onClickDelete(task) })
         return taskViewHolder;
     }
 

@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/imageTask"
-        android:layout_width="match_parent"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -24,4 +24,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+
+    <ImageButton
+        android:id="@+id/deleteTaskButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
 </LinearLayout>
