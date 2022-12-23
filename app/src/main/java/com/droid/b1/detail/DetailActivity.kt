@@ -50,7 +50,10 @@ fun Detail(onValidate: (Task) -> Unit) {
             task.content = text;
             task.description = description;
             onValidate(task);
-        }) {}
+        }) {
+            // adding text on below line.
+            Text("Create Task")
+        }
     }
 }
 

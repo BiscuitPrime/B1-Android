@@ -38,6 +38,13 @@ class TaskListFragment : Fragment() {
         viewModel.update(task)
     }
 
+    val editTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+    {
+            result ->
+
+        refreshAdapter();
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,6 +64,7 @@ class TaskListFragment : Fragment() {
         val recyclerView = binding?.recyclerView;
         recyclerView?.adapter=adapter;
         //adapter.submitList(taskList);
+        //function called when the floating action button is pressed, that will add a new task :
         binding?.floatingActionButton?.setOnClickListener(){
             val intent = Intent(context, DetailActivity::class.java);
             createTask.launch(intent);
@@ -70,6 +78,14 @@ class TaskListFragment : Fragment() {
         //deletes the associated task LOCALLY ONLY
         adapter.onClickDelete = {
             task -> taskList = taskList - task;
+            refreshAdapter();
+            viewModel.refresh();
+        }
+
+        //edits the associated task :
+        adapter.onClickEdit = {
+            val intent = Intent(context,DetailActivity::class.java);
+            editTask.launch(intent);
             refreshAdapter();
             viewModel.refresh();
         }

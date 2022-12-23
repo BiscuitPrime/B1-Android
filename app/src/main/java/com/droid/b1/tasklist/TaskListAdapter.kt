@@ -27,6 +27,9 @@ class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDif
     // Déclaration de la variable lambda dans l'adapter:
     var onClickDelete: (Task) -> Unit = {}
 
+    //Declaration of the lambda variable that will edit a task :
+    var onClickEdit: (Task) -> Unit = {}
+
     // on utilise `inner` ici afin d'avoir accès aux propriétés de l'adapter directement
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewTitle = itemView.findViewById<TextView>(R.id.task_title);
@@ -36,9 +39,16 @@ class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDif
             textViewTitle.text = task.content;
             textViewDescription.text=task.description;
             textViewImage.load("https://placebear.com/200/300");
+            //We setup the delete button of the task list :
             val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteTaskButton);
             deleteButton.setOnClickListener(){
                 onClickDelete(task);
+            }
+            //we set up the edit button of the task list :
+            var editButton = itemView.findViewById<ImageButton>(R.id.editTaskButton);
+            editButton.setOnClickListener(){
+                //PUT EXTRA HERE ?
+                onClickEdit(task);
             }
         }
     }

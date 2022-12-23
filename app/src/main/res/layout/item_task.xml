@@ -25,9 +25,23 @@
         android:layout_height="wrap_content"
         />
 
-    <ImageButton
-        android:id="@+id/deleteTaskButton"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/editTaskButton"
+            android:layout_width="198dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+        <ImageButton
+            android:id="@+id/deleteTaskButton"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    </LinearLayout>
+
 </LinearLayout>
