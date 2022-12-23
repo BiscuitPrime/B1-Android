@@ -41,8 +41,10 @@ class TaskListFragment : Fragment() {
     val editTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
     {
             result ->
-
+        val task = result.data?.getSerializableExtra("task") as Task
+        taskList = taskList.map { if (it.id == task.id) task else it }
         refreshAdapter();
+        viewModel.update(task);
     }
 
 
@@ -84,7 +86,9 @@ class TaskListFragment : Fragment() {
 
         //edits the associated task :
         adapter.onClickEdit = {
+            task ->
             val intent = Intent(context,DetailActivity::class.java);
+            intent.putExtra("Task",task);
             editTask.launch(intent);
             refreshAdapter();
             viewModel.refresh();

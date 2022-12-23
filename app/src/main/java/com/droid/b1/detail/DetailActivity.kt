@@ -18,6 +18,7 @@ import com.droid.b1.tasklist.Task
 class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val task = intent.getSerializableExtra("task") as Task?
         setContent {
             B1AndroidTheme {
                 // A surface container using the 'background' color from the theme
@@ -25,7 +26,7 @@ class DetailActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Detail({task ->
+                    Detail(task, {task ->
                         intent.putExtra("task",task);
                         setResult(RESULT_OK, intent);
                         finish();
@@ -37,22 +38,45 @@ class DetailActivity : ComponentActivity() {
 }
 
 @Composable
-fun Detail(onValidate: (Task) -> Unit) {
-    var task by remember { mutableStateOf(Task("pif", "paf", "pouf")) }
-    var text by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+fun Detail(initialTask: Task?, onValidate: (Task) -> Unit) {
+    if(initialTask!=null) //if there's a task inputted, we're in edition
+    {
+        var task by remember { mutableStateOf(Task("pif", "paf", "pouf")) }
+        var text by remember { mutableStateOf(initialTask.content) }
+        var description by remember { mutableStateOf(initialTask.description) }
 
-    Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
-        Text(text = "Task Detail", style = MaterialTheme.typography.h1)
-        OutlinedTextField(text, {text = it})
-        OutlinedTextField(description, {description = it})
-        Button(onClick = {
-            task.content = text;
-            task.description = description;
-            onValidate(task);
-        }) {
-            // adding text on below line.
-            Text("Create Task")
+        Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
+            Text(text = "Task Detail", style = MaterialTheme.typography.h1)
+            OutlinedTextField(text, {text = it})
+            OutlinedTextField(description, {description = it})
+            Button(onClick = {
+                task.content = text;
+                task.description = description;
+                onValidate(task);
+            }) {
+                // adding text to the button
+                Text("Edit Bear")
+            }
+        }
+    }
+    else //otherwise, we're creating a task out of thin air
+    {
+        var task by remember { mutableStateOf(Task("pif", "paf", "pouf")) }
+        var text by remember { mutableStateOf("Bear Name") }
+        var description by remember { mutableStateOf("Bear Description") }
+
+        Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
+            Text(text = "Task Detail", style = MaterialTheme.typography.h1)
+            OutlinedTextField(text, {text = it})
+            OutlinedTextField(description, {description = it})
+            Button(onClick = {
+                task.content = text;
+                task.description = description;
+                onValidate(task);
+            }) {
+                // adding text to the button
+                Text("Create Bear")
+            }
         }
     }
 }
