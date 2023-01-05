@@ -70,11 +70,11 @@ class TaskListFragment : Fragment() {
         binding?.floatingActionButton?.setOnClickListener(){
             val intent = Intent(context, DetailActivity::class.java);
             createTask.launch(intent);
-            val new_task = Task(UUID.randomUUID().toString(),"Task ${taskList.size+1}","dqz",)
-            taskList = taskList + new_task;
-            refreshAdapter();
+            val new_task = Task(UUID.randomUUID().toString(),"Bear ${taskList.size+1}","A nice bear",)
+            //taskList = taskList + new_task;
             viewModel.update(new_task)
-            viewModel.add(new_task);
+            //viewModel.add(new_task);
+            refreshAdapter();
         }
 
         //deletes the associated task LOCALLY ONLY

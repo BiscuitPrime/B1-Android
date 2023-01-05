@@ -24,6 +24,7 @@ class TasksListViewModel : ViewModel() {
         }
     }
 
+    //Function that will update the task on the service
     fun update(task: Task) {
         viewModelScope.launch {
             val response = webService.update(task);
@@ -37,7 +38,6 @@ class TasksListViewModel : ViewModel() {
         }
     }
 
-    // à compléter plus tard:
     fun add(task: Task) {
         viewModelScope.launch {
             val response = webService.create(task);
