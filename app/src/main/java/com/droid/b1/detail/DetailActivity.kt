@@ -42,19 +42,18 @@ class DetailActivity : ComponentActivity() {
 fun Detail(initialTask: Task?, onValidate: (Task) -> Unit) {
     if(initialTask!=null) //if there's a task inputted, we're in edition
     {
-        var task by remember { mutableStateOf(Task("pif", "paf", "pouf")) }
+        var task by remember { mutableStateOf(Task("pif", "pim","paf")) }
         var id by remember { mutableStateOf(initialTask.id)}
+        var url by remember { mutableStateOf(initialTask.description)}
         var text by remember { mutableStateOf(initialTask.content) }
-        var description by remember { mutableStateOf(initialTask.description) }
 
         Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
             Text(text = "Task Detail", style = MaterialTheme.typography.h1)
             OutlinedTextField(text, {text = it})
-            OutlinedTextField(description, {description = it})
             Button(onClick = {
                 task.id=id;
                 task.content = text;
-                task.description = description;
+                task.description = url;
                 onValidate(task);
             }) {
                 // adding text to the button
@@ -64,17 +63,18 @@ fun Detail(initialTask: Task?, onValidate: (Task) -> Unit) {
     }
     else //otherwise, we're creating a task out of thin air
     {
-        var task by remember { mutableStateOf(Task("pif", "paf", "pouf")) }
+        var task by remember { mutableStateOf(Task("pif","pim","paf")) }
         var text by remember { mutableStateOf("Bear Name") }
-        var description by remember { mutableStateOf("Bear Description") }
 
         Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
             Text(text = "Task Detail", style = MaterialTheme.typography.h1)
             OutlinedTextField(text, {text = it})
-            OutlinedTextField(description, {description = it})
+            //OutlinedTextField(description, {description = it})
             Button(onClick = {
+                val rnds = (300..499).random()
+                val rnds2 = (300..499).random()
+                task.description="https://placebear.com/"+rnds+"/"+rnds2;
                 task.content = text;
-                task.description = description;
                 onValidate(task);
             }) {
                 // adding text to the button

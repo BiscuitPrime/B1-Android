@@ -18,9 +18,8 @@ import kotlinx.coroutines.launch
 class TaskListFragment : Fragment() {
 
     private var taskList = listOf(
-        Task(id="id_1","Task 1", "Pouet pouet hahahaha"),
-        Task("id_2","Task 2", "I DO WHATEVER I WANT"),
-        Task("id_3","Task 3")
+        Task(id="id_1","Bear name","url1"),
+        Task("id_2","Bear name","url2"),
         ); //a list
 
     val adapterListener : TaskListListener = object : TaskListListener {
@@ -52,8 +51,8 @@ class TaskListFragment : Fragment() {
         // dans cette callback on récupèrera la task et on l'ajoutera à la liste
         val task = result.data?.getSerializableExtra("task") as Task
         taskList = taskList + task;
-        refreshAdapter();
         viewModel.add(task)
+        refreshAdapter();
     }
 
     val editTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
@@ -61,8 +60,9 @@ class TaskListFragment : Fragment() {
         result ->
         val task = result.data?.getSerializableExtra("task") as Task
         taskList = taskList.map { if (it.id == task.id) task else it }
-        refreshAdapter();
         viewModel.update(task);
+        refreshAdapter();
+
     }
 
 

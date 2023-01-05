@@ -10,5 +10,5 @@ data class Task(
     @SerialName("content")
     var content : String,
     @SerialName("description")
-    var description : String = "Les frigos sont moins chers chez Buts",
+    var description : String = "https://placebear.com/400/400",
 ) : java.io.Serializable

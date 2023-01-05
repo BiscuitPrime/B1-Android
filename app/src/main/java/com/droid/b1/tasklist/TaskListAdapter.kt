@@ -25,15 +25,11 @@ object TaskDiffCallback : DiffUtil.ItemCallback<Task>(){
 class TaskListAdapter(val listener: TaskListListener) : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDiffCallback) {
     // on utilise `inner` ici afin d'avoir accès aux propriétés de l'adapter directement
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textViewTitle = itemView.findViewById<TextView>(R.id.task_title);
-        val textViewDescription = itemView.findViewById<TextView>(R.id.task_description);
+        val textViewTitle = itemView.findViewById<TextView>(R.id.bear_name);
         val textViewImage = itemView.findViewById<ImageView>(R.id.imageTask);
         fun bind(task: Task) {
             textViewTitle.text = task.content;
-            textViewDescription.text=task.description;
-            val rnds = (300..499).random()
-            val rnds2 = (300..499).random()
-            textViewImage.load("https://placebear.com/"+rnds+"/"+rnds2);
+            textViewImage.load(task.description);
             //We setup the delete button of the task list :
             val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteTaskButton);
             deleteButton.setOnClickListener(){
@@ -42,7 +38,6 @@ class TaskListAdapter(val listener: TaskListListener) : ListAdapter<Task,TaskLis
             //we set up the edit button of the task list :
             var editButton = itemView.findViewById<ImageButton>(R.id.editTaskButton);
             editButton.setOnClickListener(){
-                //PUT EXTRA HERE ?
                 listener.onClickEdit(task)
             }
         }
