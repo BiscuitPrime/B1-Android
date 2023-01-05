@@ -14,7 +14,6 @@ import com.droid.b1.data.TasksListViewModel
 import com.droid.b1.databinding.FragmentTaskListBinding
 import com.droid.b1.detail.DetailActivity
 import kotlinx.coroutines.launch
-import java.util.*
 
 class TaskListFragment : Fragment() {
 
@@ -35,7 +34,7 @@ class TaskListFragment : Fragment() {
         val task = result.data?.getSerializableExtra("task") as Task
         taskList = taskList + task;
         refreshAdapter();
-        viewModel.update(task)
+        viewModel.add(task)
     }
 
     val editTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
@@ -70,8 +69,6 @@ class TaskListFragment : Fragment() {
         binding?.floatingActionButton?.setOnClickListener(){
             val intent = Intent(context, DetailActivity::class.java);
             createTask.launch(intent);
-            val new_task = Task(UUID.randomUUID().toString(),"Bear ${taskList.size+1}","A nice bear",)
-            viewModel.add(new_task)
             refreshAdapter();
         }
 

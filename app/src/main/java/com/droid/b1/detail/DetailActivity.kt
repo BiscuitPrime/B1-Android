@@ -43,6 +43,7 @@ fun Detail(initialTask: Task?, onValidate: (Task) -> Unit) {
     if(initialTask!=null) //if there's a task inputted, we're in edition
     {
         var task by remember { mutableStateOf(Task("pif", "paf", "pouf")) }
+        var id by remember { mutableStateOf(initialTask.id)}
         var text by remember { mutableStateOf(initialTask.content) }
         var description by remember { mutableStateOf(initialTask.description) }
 
@@ -51,6 +52,7 @@ fun Detail(initialTask: Task?, onValidate: (Task) -> Unit) {
             OutlinedTextField(text, {text = it})
             OutlinedTextField(description, {description = it})
             Button(onClick = {
+                task.id=id;
                 task.content = text;
                 task.description = description;
                 onValidate(task);

@@ -16,7 +16,7 @@ class TasksListViewModel : ViewModel() {
         viewModelScope.launch {
             val response = webService.fetchTasks() // Call HTTP (opération longue)
             if (!response.isSuccessful) { // à cette ligne, on a reçu la réponse de l'API
-                Log.e("Network", "Error: ${response.message()}")
+                Log.e("Network", "Error in REFRESH: ${response.message()}")
                 return@launch
             }
             val fetchedTasks = response.body()!!
@@ -29,7 +29,7 @@ class TasksListViewModel : ViewModel() {
         viewModelScope.launch {
             val response = webService.update(task);
             if (!response.isSuccessful) {
-                Log.e("Network", "Error: ${response.raw()}")
+                Log.e("Network", "Error in UPDATE: ${response.raw()}")
                 return@launch
             }
             val updatedTask = response.body()!!
@@ -42,7 +42,7 @@ class TasksListViewModel : ViewModel() {
         viewModelScope.launch {
             val response = webService.create(task);
             if (!response.isSuccessful) {
-                Log.e("Network", "Error: ${response.raw()}")
+                Log.e("Network", "Error in ADD ${response.raw()}")
                 return@launch
             }
             val addedTask = response.body()!!
