@@ -22,13 +22,13 @@ object TaskDiffCallback : DiffUtil.ItemCallback<Task>(){
     }
 }
 
-class TaskListAdapter() : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDiffCallback) {
+class TaskListAdapter(val listener: TaskListListener) : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDiffCallback) {
 
     // Déclaration de la variable lambda dans l'adapter:
-    var onClickDelete: (Task) -> Unit = {}
+    //var onClickDelete: (Task) -> Unit = {}
 
     //Declaration of the lambda variable that will edit a task :
-    var onClickEdit: (Task) -> Unit = {}
+    //var onClickEdit: (Task) -> Unit = {}
 
     // on utilise `inner` ici afin d'avoir accès aux propriétés de l'adapter directement
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,13 +42,13 @@ class TaskListAdapter() : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskD
             //We setup the delete button of the task list :
             val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteTaskButton);
             deleteButton.setOnClickListener(){
-                onClickDelete(task);
+                listener.onClickDelete(task)
             }
             //we set up the edit button of the task list :
             var editButton = itemView.findViewById<ImageButton>(R.id.editTaskButton);
             editButton.setOnClickListener(){
                 //PUT EXTRA HERE ?
-                onClickEdit(task);
+                listener.onClickEdit(task)
             }
         }
     }

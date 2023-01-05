@@ -23,7 +23,23 @@ class TaskListFragment : Fragment() {
         Task("id_3","Task 3")
         ); //a list
 
-    private val adapter = TaskListAdapter();
+    val adapterListener : TaskListListener = object : TaskListListener {
+
+        override fun onClickDelete(task: Task) : Unit {
+            taskList = taskList - task;
+            refreshAdapter();
+            viewModel.refresh();
+        }
+        override fun onClickEdit(task: Task) : Unit {
+            val intent = Intent(context,DetailActivity::class.java);
+            intent.putExtra("Task",task);
+            editTask.launch(intent);
+            refreshAdapter();
+            viewModel.refresh();
+        }
+    }
+
+    private val adapter = TaskListAdapter(adapterListener);
     private var binding : FragmentTaskListBinding? = null;
     private val viewModel: TasksListViewModel by viewModels()
 
@@ -73,7 +89,7 @@ class TaskListFragment : Fragment() {
         }
 
         //deletes the associated task LOCALLY ONLY
-        adapter.onClickDelete = {
+        /*adapter.onClickDelete = {
             task -> taskList = taskList - task;
             refreshAdapter();
             viewModel.refresh();
@@ -88,8 +104,7 @@ class TaskListFragment : Fragment() {
             taskList = taskList.map { if (it.id == task.id) task else it }
             refreshAdapter();
             viewModel.refresh();
-        }
-
+        }*/
 
         lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
             suspendMethod();
