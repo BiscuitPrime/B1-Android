@@ -18,7 +18,8 @@ import com.droid.b1.tasklist.Task
 class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val task = intent.getSerializableExtra("task") as Task?
+        val task = intent.getSerializableExtra("Task") as Task?
+        System.out.println("DETAIL ACTIVITY : "+task);
         setContent {
             B1AndroidTheme {
                 // A surface container using the 'background' color from the theme

@@ -90,6 +90,7 @@ class TaskListFragment : Fragment() {
             val intent = Intent(context,DetailActivity::class.java);
             intent.putExtra("Task",task);
             editTask.launch(intent);
+            taskList = taskList.map { if (it.id == task.id) task else it }
             refreshAdapter();
             viewModel.refresh();
         }
