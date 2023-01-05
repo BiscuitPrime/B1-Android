@@ -16,12 +16,7 @@ import com.droid.b1.detail.DetailActivity
 import kotlinx.coroutines.launch
 import java.util.*
 
-interface TaskListListener {
-    fun onClickDelete(task: Task)
-    fun onClickEdit(task: Task)
-}
-
-class TaskListFragment : Fragment {
+class TaskListFragment : Fragment() {
 
     private var taskList = listOf(
         Task(id="id_1","Task 1", "Pouet pouet hahahaha"),
@@ -30,20 +25,22 @@ class TaskListFragment : Fragment {
         ); //a list
 
     val adapterListener : TaskListListener = object : TaskListListener {
-        override fun onClickDelete(task: Task) {
-            task -> taskList = taskList - task;
+
+        override fun onClickDelete(task: Task) : Unit {
+            taskList = taskList - task;
             refreshAdapter();
-            viewModel.refresh(); }
-        override fun onClickEdit(task: Task) {
-            task ->
+            viewModel.refresh();
+        }
+        override fun onClickEdit(task: Task) : Unit {
             val intent = Intent(context,DetailActivity::class.java);
             intent.putExtra("Task",task);
             editTask.launch(intent);
             refreshAdapter();
-            viewModel.refresh();}
+            viewModel.refresh();
+        }
     }
 
-    private val adapter = TaskListAdapter();
+    private val adapter = TaskListAdapter(adapterListener);
     private var binding : FragmentTaskListBinding? = null;
     private val viewModel: TasksListViewModel by viewModels()
 
@@ -113,7 +110,6 @@ class TaskListFragment : Fragment {
             refreshAdapter();
             viewModel.refresh();
         }*/
-
 
         lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
             suspendMethod();
