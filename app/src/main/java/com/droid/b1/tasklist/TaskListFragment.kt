@@ -25,11 +25,14 @@ class TaskListFragment : Fragment() {
 
     val adapterListener : TaskListListener = object : TaskListListener {
 
+        //function that will handle the deletion of the bear
         override fun onClickDelete(task: Task) : Unit {
             taskList = taskList - task;
             refreshAdapter();
             viewModel.refresh();
         }
+
+        //function that will handle the edition of the bear
         override fun onClickEdit(task: Task) : Unit {
             val intent = Intent(context,DetailActivity::class.java);
             intent.putExtra("Task",task);
@@ -80,7 +83,6 @@ class TaskListFragment : Fragment() {
         //val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView);
         val recyclerView = binding?.recyclerView;
         recyclerView?.adapter=adapter;
-        //adapter.submitList(taskList);
         //function called when the floating action button is pressed, that will add a new task :
         binding?.floatingActionButton?.setOnClickListener(){
             val intent = Intent(context, DetailActivity::class.java);
