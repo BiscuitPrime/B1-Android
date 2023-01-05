@@ -48,7 +48,7 @@ fun Detail(initialTask: Task?, onValidate: (Task) -> Unit) {
         var text by remember { mutableStateOf(initialTask.content) }
 
         Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
-            Text(text = "Task Detail", style = MaterialTheme.typography.h1)
+            Text(text = "Bear Details", style = MaterialTheme.typography.h1)
             OutlinedTextField(text, {text = it})
             Button(onClick = {
                 task.id=id;
@@ -67,7 +67,7 @@ fun Detail(initialTask: Task?, onValidate: (Task) -> Unit) {
         var text by remember { mutableStateOf("Bear Name") }
 
         Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
-            Text(text = "Task Detail", style = MaterialTheme.typography.h1)
+            Text(text = "Bear Details", style = MaterialTheme.typography.h1)
             OutlinedTextField(text, {text = it})
             //OutlinedTextField(description, {description = it})
             Button(onClick = {
