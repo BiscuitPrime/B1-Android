@@ -16,13 +16,32 @@ import com.droid.b1.detail.DetailActivity
 import kotlinx.coroutines.launch
 import java.util.*
 
-class TaskListFragment : Fragment() {
+interface TaskListListener {
+    fun onClickDelete(task: Task)
+    fun onClickEdit(task: Task)
+}
+
+class TaskListFragment : Fragment {
 
     private var taskList = listOf(
         Task(id="id_1","Task 1", "Pouet pouet hahahaha"),
         Task("id_2","Task 2", "I DO WHATEVER I WANT"),
         Task("id_3","Task 3")
         ); //a list
+
+    val adapterListener : TaskListListener = object : TaskListListener {
+        override fun onClickDelete(task: Task) {
+            task -> taskList = taskList - task;
+            refreshAdapter();
+            viewModel.refresh(); }
+        override fun onClickEdit(task: Task) {
+            task ->
+            val intent = Intent(context,DetailActivity::class.java);
+            intent.putExtra("Task",task);
+            editTask.launch(intent);
+            refreshAdapter();
+            viewModel.refresh();}
+    }
 
     private val adapter = TaskListAdapter();
     private var binding : FragmentTaskListBinding? = null;
@@ -78,7 +97,7 @@ class TaskListFragment : Fragment() {
         }
 
         //deletes the associated task LOCALLY ONLY
-        adapter.onClickDelete = {
+        /*adapter.onClickDelete = {
             task -> taskList = taskList - task;
             refreshAdapter();
             viewModel.refresh();
@@ -93,7 +112,7 @@ class TaskListFragment : Fragment() {
             taskList = taskList.map { if (it.id == task.id) task else it }
             refreshAdapter();
             viewModel.refresh();
-        }
+        }*/
 
 
         lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
