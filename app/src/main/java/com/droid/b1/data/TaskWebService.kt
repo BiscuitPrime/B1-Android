@@ -2,10 +2,7 @@ package com.droid.b1.data
 
 import com.droid.b1.tasklist.Task
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface TasksWebService {
     @GET("/rest/v2/tasks/")
@@ -16,4 +13,7 @@ interface TasksWebService {
 
     @POST("/rest/v2/tasks/{id}")
     suspend fun update(@Body task: Task, @Path("id") id: String = task.id): Response<Task>
+
+    @DELETE("/rest/v2/tasks/{id}")
+    suspend fun delete(@Path("id") id: String): Response<Task>
 }

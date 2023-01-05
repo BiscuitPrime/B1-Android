@@ -27,9 +27,9 @@ class TaskListFragment : Fragment() {
 
         //function that will handle the deletion of the bear
         override fun onClickDelete(task: Task) : Unit {
-            taskList = taskList - task;
-            refreshAdapter();
+            viewModel.remove(task);
             viewModel.refresh();
+            refreshAdapter();
         }
 
         //function that will handle the edition of the bear
@@ -37,8 +37,8 @@ class TaskListFragment : Fragment() {
             val intent = Intent(context,DetailActivity::class.java);
             intent.putExtra("Task",task);
             editTask.launch(intent);
-            refreshAdapter();
             viewModel.refresh();
+            refreshAdapter();
         }
     }
 

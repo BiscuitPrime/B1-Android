@@ -50,9 +50,16 @@ class TasksListViewModel : ViewModel() {
         }
     }
 
-    //function that will edit a task on the service
-    fun edit(task: Task) {}
-
     //function that will remove a task from the service
-    fun remove(task: Task) {}
+    fun remove(task: Task) {
+        viewModelScope.launch {
+            val response = webService.delete(task.id);
+            if (!response.isSuccessful) {
+                Log.e("Network", "Error in REMOVE ${response.raw()}")
+                return@launch
+            }
+
+            tasksStateFlow.value = tasksStateFlow.value -task;
+        }
+    }
 }
