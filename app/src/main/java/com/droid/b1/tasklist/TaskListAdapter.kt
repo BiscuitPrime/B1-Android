@@ -22,7 +22,7 @@ object TaskDiffCallback : DiffUtil.ItemCallback<Task>(){
     }
 }
 
-class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDiffCallback) {
+class TaskListAdapter() : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(TaskDiffCallback) {
 
     // Déclaration de la variable lambda dans l'adapter:
     var onClickDelete: (Task) -> Unit = {}
