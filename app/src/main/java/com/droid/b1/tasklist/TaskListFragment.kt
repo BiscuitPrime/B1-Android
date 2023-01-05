@@ -40,7 +40,7 @@ class TaskListFragment : Fragment() {
 
     val editTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
     {
-            result ->
+        result ->
         val task = result.data?.getSerializableExtra("task") as Task
         taskList = taskList.map { if (it.id == task.id) task else it }
         refreshAdapter();
@@ -71,9 +71,7 @@ class TaskListFragment : Fragment() {
             val intent = Intent(context, DetailActivity::class.java);
             createTask.launch(intent);
             val new_task = Task(UUID.randomUUID().toString(),"Bear ${taskList.size+1}","A nice bear",)
-            //taskList = taskList + new_task;
-            viewModel.update(new_task)
-            //viewModel.add(new_task);
+            viewModel.add(new_task)
             refreshAdapter();
         }
 

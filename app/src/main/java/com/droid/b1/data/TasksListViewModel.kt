@@ -32,12 +32,12 @@ class TasksListViewModel : ViewModel() {
                 Log.e("Network", "Error: ${response.raw()}")
                 return@launch
             }
-
             val updatedTask = response.body()!!
             tasksStateFlow.value = tasksStateFlow.value.map { if (it.id == updatedTask.id) updatedTask else it }
         }
     }
 
+    //function that will add a task on the service
     fun add(task: Task) {
         viewModelScope.launch {
             val response = webService.create(task);
@@ -45,11 +45,14 @@ class TasksListViewModel : ViewModel() {
                 Log.e("Network", "Error: ${response.raw()}")
                 return@launch
             }
-
-            val updatedTask = response.body()!!
-            tasksStateFlow.value = tasksStateFlow.value + updatedTask;
+            val addedTask = response.body()!!
+            tasksStateFlow.value = tasksStateFlow.value+addedTask;
         }
     }
+
+    //function that will edit a task on the service
     fun edit(task: Task) {}
+
+    //function that will remove a task from the service
     fun remove(task: Task) {}
 }
