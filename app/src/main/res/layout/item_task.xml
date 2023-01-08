@@ -45,6 +45,6 @@
         android:id="@+id/feedBearButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_lock_idle_charging" />
+        app:srcCompat="@android:drawable/ic_menu_rotate" />
 
 </LinearLayout>

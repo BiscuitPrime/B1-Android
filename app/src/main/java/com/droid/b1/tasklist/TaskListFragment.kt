@@ -14,6 +14,7 @@ import com.droid.b1.data.TasksListViewModel
 import com.droid.b1.databinding.FragmentTaskListBinding
 import com.droid.b1.detail.DetailActivity
 import com.droid.b1.feeding.FeedingActivity
+import kotlinx.coroutines.DefaultExecutor.thread
 import kotlinx.coroutines.launch
 
 class TaskListFragment : Fragment() {
@@ -74,7 +75,6 @@ class TaskListFragment : Fragment() {
         refreshAdapter();
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -98,29 +98,29 @@ class TaskListFragment : Fragment() {
             createTask.launch(intent);
             refreshAdapter();
         }
-
-        //deletes the associated task LOCALLY ONLY
-        /*adapter.onClickDelete = {
-            task -> taskList = taskList - task;
-            refreshAdapter();
-            viewModel.refresh();
-        }
-
-        //edits the associated task :
-        adapter.onClickEdit = {
-            task ->
-            val intent = Intent(context,DetailActivity::class.java);
-            intent.putExtra("Task",task);
-            editTask.launch(intent);
-            taskList = taskList.map { if (it.id == task.id) task else it }
-            refreshAdapter();
-            viewModel.refresh();
-        }*/
-
         lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
             suspendMethod();
         }
+        Thread thread = new Thread() {
 
+            @Override
+            public void run() {
+                try {
+                    while (!thread.isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // update TextView here!
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        thread.start();
     }
 
     suspend fun suspendMethod(){
