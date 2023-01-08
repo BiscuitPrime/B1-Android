@@ -13,6 +13,7 @@ import com.droid.b1.data.Api
 import com.droid.b1.data.TasksListViewModel
 import com.droid.b1.databinding.FragmentTaskListBinding
 import com.droid.b1.detail.DetailActivity
+import com.droid.b1.feeding.FeedingActivity
 import kotlinx.coroutines.launch
 
 class TaskListFragment : Fragment() {
@@ -42,7 +43,11 @@ class TaskListFragment : Fragment() {
 
         //function that will handle the feeding of the bear
         override fun onClickFeed(task: Task) {
-            val intent = Intent(context, )
+            val intent = Intent(context, FeedingActivity::class.java)
+            intent.putExtra("Task", task)
+            editTask.launch(intent)
+            viewModel.refresh()
+            refreshAdapter()
         }
     }
 
@@ -67,7 +72,6 @@ class TaskListFragment : Fragment() {
         taskList = taskList.map { if (it.id == task.id) task else it }
         viewModel.update(task);
         refreshAdapter();
-
     }
 
 
