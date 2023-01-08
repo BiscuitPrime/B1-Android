@@ -28,17 +28,23 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/editTaskButton"
+            android:id="@+id/editBearButton"
             android:layout_width="198dp"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_menu_edit" />
 
         <ImageButton
-            android:id="@+id/deleteTaskButton"
+            android:id="@+id/deleteBearButton"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_menu_delete" />
 
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/feedBearButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_lock_idle_charging" />
 
 </LinearLayout>

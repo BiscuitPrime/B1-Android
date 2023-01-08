@@ -25,19 +25,24 @@ class TaskListFragment : Fragment() {
     val adapterListener : TaskListListener = object : TaskListListener {
 
         //function that will handle the deletion of the bear
-        override fun onClickDelete(task: Task) : Unit {
+        override fun onClickDelete(task: Task) {
             viewModel.remove(task);
             viewModel.refresh();
             refreshAdapter();
         }
 
         //function that will handle the edition of the bear
-        override fun onClickEdit(task: Task) : Unit {
+        override fun onClickEdit(task: Task) {
             val intent = Intent(context,DetailActivity::class.java);
             intent.putExtra("Task",task);
             editTask.launch(intent);
             viewModel.refresh();
             refreshAdapter();
+        }
+
+        //function that will handle the feeding of the bear
+        override fun onClickFeed(task: Task) {
+            val intent = Intent(context, )
         }
     }
 
