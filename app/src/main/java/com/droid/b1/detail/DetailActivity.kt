@@ -19,7 +19,7 @@ class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val task = intent.getSerializableExtra("Task") as Task?
-        System.out.println("DETAIL ACTIVITY : "+task);
+        //System.out.println("DETAIL ACTIVITY : "+task);
         setContent {
             B1AndroidTheme {
                 // A surface container using the 'background' color from the theme
@@ -44,7 +44,7 @@ fun Detail(initialTask: Task?, onValidate: (Task) -> Unit) {
     {
         var task by remember { mutableStateOf(Task("pif", "pim","paf")) }
         var id by remember { mutableStateOf(initialTask.id)}
-        var url by remember { mutableStateOf(initialTask.description)}
+        var url by remember { mutableStateOf(initialTask.getUrl())}
         var text by remember { mutableStateOf(initialTask.content) }
 
         Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
@@ -53,7 +53,7 @@ fun Detail(initialTask: Task?, onValidate: (Task) -> Unit) {
             Button(onClick = {
                 task.id=id;
                 task.content = text;
-                task.description = url;
+                task.setUrl(url)
                 onValidate(task);
             }) {
                 // adding text to the button
@@ -63,7 +63,7 @@ fun Detail(initialTask: Task?, onValidate: (Task) -> Unit) {
     }
     else //otherwise, we're creating a task out of thin air
     {
-        var task by remember { mutableStateOf(Task("pif","pim","paf")) }
+        var task by remember { mutableStateOf(Task("pif","pim","paf 123")) }
         var text by remember { mutableStateOf("Bear Name") }
 
         Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
@@ -73,7 +73,8 @@ fun Detail(initialTask: Task?, onValidate: (Task) -> Unit) {
             Button(onClick = {
                 val rnds = (300..499).random()
                 val rnds2 = (300..499).random()
-                task.description="https://placebear.com/"+rnds+"/"+rnds2;
+                task.setUrl("https://placebear.com/"+rnds+"/"+rnds2)
+                task.setHunger("100")
                 task.content = text;
                 onValidate(task);
             }) {

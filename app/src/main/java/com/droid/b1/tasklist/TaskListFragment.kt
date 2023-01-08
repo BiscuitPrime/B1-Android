@@ -2,6 +2,8 @@ package com.droid.b1.tasklist
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +16,6 @@ import com.droid.b1.data.TasksListViewModel
 import com.droid.b1.databinding.FragmentTaskListBinding
 import com.droid.b1.detail.DetailActivity
 import com.droid.b1.feeding.FeedingActivity
-import kotlinx.coroutines.DefaultExecutor.thread
 import kotlinx.coroutines.launch
 
 class TaskListFragment : Fragment() {
@@ -55,7 +56,7 @@ class TaskListFragment : Fragment() {
     private val adapter = TaskListAdapter(adapterListener);
     private var binding : FragmentTaskListBinding? = null;
     private val viewModel: TasksListViewModel by viewModels()
-
+    final val hungerAmountRemoved : Int = 5;
     val createTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
     {
        result ->
@@ -101,26 +102,22 @@ class TaskListFragment : Fragment() {
         lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
             suspendMethod();
         }
-        Thread thread = new Thread() {
 
-            @Override
-            public void run() {
-                try {
-                    while (!thread.isInterrupted()) {
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // update TextView here!
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
+        val handler = Handler()
+        val delay : Long = 1000 // 1000 milliseconds == 1 second
+
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                Log.d("Loop ", "hunger was removed")
+                for (task in taskList) {
+                    task.removeHunger(hungerAmountRemoved)
+                    viewModel.update(task);
                 }
+                viewModel.refresh()
+                refreshAdapter();
+                handler.postDelayed(this, delay)
             }
-        };
-
-        thread.start();
+        }, delay)
     }
 
     suspend fun suspendMethod(){
