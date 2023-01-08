@@ -2,6 +2,8 @@ package com.droid.b1.tasklist
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import com.droid.b1.data.Api
 import com.droid.b1.data.TasksListViewModel
 import com.droid.b1.databinding.FragmentTaskListBinding
 import com.droid.b1.detail.DetailActivity
+import com.droid.b1.feeding.FeedingActivity
 import kotlinx.coroutines.launch
 
 class TaskListFragment : Fragment() {
@@ -25,26 +28,35 @@ class TaskListFragment : Fragment() {
     val adapterListener : TaskListListener = object : TaskListListener {
 
         //function that will handle the deletion of the bear
-        override fun onClickDelete(task: Task) : Unit {
+        override fun onClickDelete(task: Task) {
             viewModel.remove(task);
             viewModel.refresh();
             refreshAdapter();
         }
 
         //function that will handle the edition of the bear
-        override fun onClickEdit(task: Task) : Unit {
+        override fun onClickEdit(task: Task) {
             val intent = Intent(context,DetailActivity::class.java);
             intent.putExtra("Task",task);
             editTask.launch(intent);
             viewModel.refresh();
             refreshAdapter();
         }
+
+        //function that will handle the feeding of the bear
+        override fun onClickFeed(task: Task) {
+            val intent = Intent(context, FeedingActivity::class.java)
+            intent.putExtra("Task", task)
+            editTask.launch(intent)
+            viewModel.refresh()
+            refreshAdapter()
+        }
     }
 
     private val adapter = TaskListAdapter(adapterListener);
     private var binding : FragmentTaskListBinding? = null;
     private val viewModel: TasksListViewModel by viewModels()
-
+    final val hungerAmountRemoved : Int = 5;
     val createTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
     {
        result ->
@@ -62,9 +74,7 @@ class TaskListFragment : Fragment() {
         taskList = taskList.map { if (it.id == task.id) task else it }
         viewModel.update(task);
         refreshAdapter();
-
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,29 +99,25 @@ class TaskListFragment : Fragment() {
             createTask.launch(intent);
             refreshAdapter();
         }
-
-        //deletes the associated task LOCALLY ONLY
-        /*adapter.onClickDelete = {
-            task -> taskList = taskList - task;
-            refreshAdapter();
-            viewModel.refresh();
-        }
-
-        //edits the associated task :
-        adapter.onClickEdit = {
-            task ->
-            val intent = Intent(context,DetailActivity::class.java);
-            intent.putExtra("Task",task);
-            editTask.launch(intent);
-            taskList = taskList.map { if (it.id == task.id) task else it }
-            refreshAdapter();
-            viewModel.refresh();
-        }*/
-
         lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
             suspendMethod();
         }
 
+        val handler = Handler()
+        val delay : Long = 1000 // 1000 milliseconds == 1 second
+
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                Log.d("Loop ", "hunger was removed")
+                for (task in taskList) {
+                    task.removeHunger(hungerAmountRemoved)
+                    viewModel.update(task);
+                }
+                viewModel.refresh()
+                refreshAdapter();
+                handler.postDelayed(this, delay)
+            }
+        }, delay)
     }
 
     suspend fun suspendMethod(){

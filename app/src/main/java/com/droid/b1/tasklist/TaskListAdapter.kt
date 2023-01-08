@@ -26,19 +26,26 @@ class TaskListAdapter(val listener: TaskListListener) : ListAdapter<Task,TaskLis
     // on utilise `inner` ici afin d'avoir accès aux propriétés de l'adapter directement
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewTitle = itemView.findViewById<TextView>(R.id.bear_name);
+        val textViewHunger = itemView.findViewById<TextView>(R.id.bear_hunger);
         val textViewImage = itemView.findViewById<ImageView>(R.id.imageTask);
         fun bind(task: Task) {
             textViewTitle.text = task.content;
-            textViewImage.load(task.description);
-            //We setup the delete button of the task list :
-            val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteTaskButton);
+            textViewHunger.text = task.getHunger();
+            textViewImage.load(task.getUrl());
+            //We setup the delete button of the bear :
+            val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteBearButton);
             deleteButton.setOnClickListener(){
                 listener.onClickDelete(task)
             }
-            //we set up the edit button of the task list :
-            var editButton = itemView.findViewById<ImageButton>(R.id.editTaskButton);
+            //we set up the edit button of the bear :
+            var editButton = itemView.findViewById<ImageButton>(R.id.editBearButton);
             editButton.setOnClickListener(){
                 listener.onClickEdit(task)
+            }
+            // we set up the feed button of the bear :
+            var feedButton = itemView.findViewById<ImageButton>(R.id.feedBearButton);
+            feedButton.setOnClickListener(){
+                listener.onClickFeed(task)
             }
         }
     }
