@@ -56,7 +56,7 @@ class TaskListFragment : Fragment() {
     private val adapter = TaskListAdapter(adapterListener);
     private var binding : FragmentTaskListBinding? = null;
     private val viewModel: TasksListViewModel by viewModels()
-    final val hungerAmountRemoved : Int = 5;
+    final val hungerAmountRemoved : Int = 1;
     val createTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
     {
        result ->

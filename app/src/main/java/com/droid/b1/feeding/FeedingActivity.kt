@@ -14,6 +14,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -52,12 +53,12 @@ fun Feeding(initialTask: Task, onReturn: (Task) -> Unit) {
     val rnds = (300..499).random()
     val rnds2 = (300..499).random()
     var catAmount by remember { mutableStateOf(startingCatAmount) }
-    Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
+    Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(id = android.R.drawable.ic_menu_close_clear_cancel), contentDescription = null,
             modifier = Modifier.clickable { onReturn(initialTask) })
-        Text(text = "Feed the bear", textAlign = TextAlign.Center, style = MaterialTheme.typography.h2)
-        Text(text = "Cats remaining : " + catAmount)
+        Text(text = "Feed the bear", textAlign = TextAlign.Center, style = MaterialTheme.typography.h3)
+        Text(text = "Cats remaining : " + catAmount, textAlign = TextAlign.Center, style = MaterialTheme.typography.h4)
         AsyncImage(model = "https://placekitten.com/"+rnds+"/"+rnds2,
             modifier = Modifier.clickable(onClick = {
                 // feed the bear
